@@ -20,8 +20,6 @@ The world is small and you'll see that most users know each other - because thei
 
 Just install, activate, it will automatically plug in into buddypress profile page
 
-1. screenshot-1.jpg
-
 == Installation ==
 
 1. Upload the files to the `/wp-content/plugins/buddypress-foaf/` directory or install through WordPress directly.
@@ -35,6 +33,10 @@ Just install, activate, it will automatically plug in into buddypress profile pa
 = You have a question? =
 
 Use the support forum
+
+== Screenshots ==
+
+1. screenshot-1.jpg
 
 == Changelog ==
 
