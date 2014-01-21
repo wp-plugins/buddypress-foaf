@@ -27,6 +27,8 @@ Just install, activate, it will automatically plug in into buddypress profile pa
 1. Open a profile of a friend, a friend of a friend or a friend of a friend of a friend to see how it works :-)
 1. Have fun!
 
+Available Shortcodes:
+* [buddypressfoaf_show_potential_friends]
 
 == Frequently Asked Questions ==
 
