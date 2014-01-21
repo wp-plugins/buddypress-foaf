@@ -21,6 +21,7 @@ function buddypressfoaf_load_textdomain() {
 }
 
 add_action('bp_before_member_header', 'buddypressfoaf_action');
+add_shortcode('buddypressfoaf_show_potential_friends', 'buddypressfoaf_show_potential_friends');
 
 function buddypressfoaf_action() {
     $current_user = wp_get_current_user();
@@ -124,5 +125,77 @@ function buddypressfoaf_output($args) {
         }
     }
     return $content;
+}
+
+function buddypressfoaf_show_potential_friends() {
+
+    $current_user = wp_get_current_user();
+
+    // get friends
+    $friends = friends_get_friend_user_ids($current_user->ID);
+
+    // get friends of friends
+    global $wpdb;
+    global $bp;
+    $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
+    $query = '
+        SELECT u.ID, u.user_login, count(nested.id) as commonContacts
+        FROM (
+            SELECT friend_user_id as id
+            FROM ' . $bp->friends->table_name . ' 
+            WHERE initiator_user_id IN (' . implode(', ', $friends) . ')
+            AND friend_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+            AND  is_confirmed = 1
+
+            UNION ALL
+
+            SELECT initiator_user_id as id
+            FROM ' . $bp->friends->table_name . '
+            WHERE friend_user_id IN (' . implode(', ', $friends) . ')
+            AND initiator_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+            AND  is_confirmed = 1
+            ) AS nested
+
+        INNER JOIN '.$wpdb->users.' as u
+        ON u.ID = nested.id
+        GROUP BY nested.id
+        HAVING commonContacts > 1 
+        ';
+
+    // Random friends of your friends
+    $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY RAND() LIMIT 10"));
+    $output.="<h3>" . __('Random friends of your friends you might know', 'buddypressfoaf') . "</h3>";
+    if ($result) {
+        foreach ($result as $obj) {
+            // get avatar
+            $i++;
+            $actualUser = new BP_Core_User($obj->ID);
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
+        }
+        //print "<pre>" . var_dump($usersWithCommonFriends);
+    } else {
+        $output.= "<p>" . __('No friends found. Search for some users, add them as friends and come back to this page!', 'buddypressfoaf') . "</p>";
+    }
+    $output.='<br style="clear:both">';
+    $output.='<p><a href="' . get_permalink() . '?' . time() . '">' . __('You want to see more? Reload this page!', 'buddypressfoaf') . '</a></p>';
+
+    // now we will show the top ten
+    $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY commonContacts DESC LIMIT 10"));
+    $output.="<h3>" . __('You have most common friends with these users', 'buddypressfoaf') . "</h3>";
+    if ($result) {
+        foreach ($result as $obj) {
+            // get avatar
+            $actualUser = new BP_Core_User($obj->ID);
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
+        }
+    } else {
+        $output.= "<p>" . __('No friends found. Search for some users, add them as friends and come back to this page!', 'buddypressfoaf') . "</p>";
+    }
+
+    $output.='<br style="clear:both">';
+
+    return $output;
 }
 

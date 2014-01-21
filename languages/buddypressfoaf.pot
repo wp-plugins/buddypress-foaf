@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-17 23:28+0100\n"
+"POT-Creation-Date: 2014-01-21 22:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,14 +17,36 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: buddypress-foaf.php:86
+#: buddypress-foaf.php:85
 msgid "Internal Error, Code:"
 msgstr ""
 
-#: buddypress-foaf.php:96
+#: buddypress-foaf.php:95
 msgid "No connection found"
 msgstr ""
 
-#: buddypress-foaf.php:128
+#: buddypress-foaf.php:97
 msgid "Your connection to this user"
+msgstr ""
+
+#: buddypress-foaf.php:164
+msgid "You have most common friends with these users"
+msgstr ""
+
+#: buddypress-foaf.php:170 buddypress-foaf.php:187
+msgid "common contacts"
+msgstr ""
+
+#: buddypress-foaf.php:173 buddypress-foaf.php:191
+msgid ""
+"No friends found. Search for some users, add them as friends and come back "
+"to this page!"
+msgstr ""
+
+#: buddypress-foaf.php:180
+msgid "Random friends of your friends you might know"
+msgstr ""
+
+#: buddypress-foaf.php:194
+msgid "You want to see more? Reload this page!"
 msgstr ""

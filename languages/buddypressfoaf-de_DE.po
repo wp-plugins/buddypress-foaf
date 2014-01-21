@@ -7,25 +7,52 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Buddypress Friend of a Friend\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-17 23:28+0100\n"
-"PO-Revision-Date: 2014-01-17 23:31+0100\n"
+"POT-Creation-Date: 2014-01-21 22:07+0100\n"
+"PO-Revision-Date: 2014-01-21 22:07+0100\n"
 "Last-Translator: Florian Schießl <florian.schiessl@ifs-net.de>\n"
 "Language-Team: Florian Schießl\n"
+"Language: Deutsch\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.7\n"
-"Language: Deutsch\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: buddypress-foaf.php:86
+#: buddypress-foaf.php:85
 msgid "Internal Error, Code:"
 msgstr "Interner Fehler, Fehlercode:"
 
-#: buddypress-foaf.php:96
+#: buddypress-foaf.php:95
 msgid "No connection found"
 msgstr "Keine Verbindung zu diesem Benutzer gefunden"
 
-#: buddypress-foaf.php:128
+#: buddypress-foaf.php:97
 msgid "Your connection to this user"
 msgstr "Deine Verbindung zu diesem Mitglied"
+
+#: buddypress-foaf.php:164
+msgid "You have most common friends with these users"
+msgstr "Die meisten gemeinsamen Freunde hast Du mit"
+
+#: buddypress-foaf.php:170 buddypress-foaf.php:187
+msgid "common contacts"
+msgstr "gemeinsame Freunde"
+
+#: buddypress-foaf.php:173 buddypress-foaf.php:191
+msgid ""
+"No friends found. Search for some users, add them as friends and come back "
+"to this page!"
+msgstr ""
+"Es konnten keine Freunde ermittelt werden. Schau dich in den Profilen um, "
+"finde ein paar Freunde und füge diese als Kontakte hinzu und schon bekommst "
+"Du hier Ergebnisse angezeigt!"
+
+#: buddypress-foaf.php:180
+msgid "Random friends of your friends you might know"
+msgstr "Zufällige Freunde Deiner Freunde"
+
+#: buddypress-foaf.php:194
+msgid "You want to see more? Reload this page!"
+msgstr ""
+"Du willste mehr Benutzer angezeigt bekommen? Klicke hier und lade diese "
+"Seite neu!"
