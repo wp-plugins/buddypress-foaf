@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
@@ -16,6 +15,9 @@
 // Load translations and text domain
 add_action('init', 'buddypressfoaf_load_textdomain');
 
+/**
+ * This function just loads language files
+ */
 function buddypressfoaf_load_textdomain() {
     load_plugin_textdomain('buddypressfoaf', false, dirname(plugin_basename(__FILE__)) . "/languages/");
 }
@@ -23,6 +25,11 @@ function buddypressfoaf_load_textdomain() {
 add_action('bp_before_member_header', 'buddypressfoaf_action');
 add_shortcode('buddypressfoaf_show_potential_friends', 'buddypressfoaf_show_potential_friends');
 
+/**
+ * This function displays information if you know a visited profile via some friends
+ * @global type $bp
+ * @global type $wpdb
+ */
 function buddypressfoaf_action() {
     $current_user = wp_get_current_user();
     $noConnectionFound = false;
@@ -127,6 +134,13 @@ function buddypressfoaf_output($args) {
     return $content;
 }
 
+/**
+ * This shortcode displays friends of friends a user might now
+ * 
+ * @global type $wpdb
+ * @global type $bp
+ * @return string
+ */
 function buddypressfoaf_show_potential_friends() {
 
     $current_user = wp_get_current_user();
@@ -156,7 +170,7 @@ function buddypressfoaf_show_potential_friends() {
             AND  is_confirmed = 1
             ) AS nested
 
-        INNER JOIN '.$wpdb->users.' as u
+        INNER JOIN ' . $wpdb->users . ' as u
         ON u.ID = nested.id
         GROUP BY nested.id
         HAVING commonContacts > 1 
@@ -199,3 +213,145 @@ function buddypressfoaf_show_potential_friends() {
     return $output;
 }
 
+add_action('widgets_init', 'buddypressfoaf_widget_random');
+
+function buddypressfoaf_widget_random() {
+    register_widget('BuddypressFOAF_Widget_Random');
+}
+
+class BuddypressFOAF_Widget_Random extends WP_Widget {
+
+    function BuddypressFOAF_Widget_Random() {
+        $widget_ops = array('classname' => 'buddypressfoaf', 'description' => __('A widget that displays a random friend of a friend', 'buddypressfoaf'));
+
+        $control_ops = array('width' => 300, 'height' => 350, 'id_base' => 'buddypressfoaf-widget-random');
+
+        $this->WP_Widget('buddypressfoaf-widget-random', __('Buddypress FOAF (random)', 'buddypressfoaf'), $widget_ops, $control_ops);
+    }
+
+    function widget($args, $instance) {
+        extract($args);
+
+        //Our variables from the widget settings.
+        $title = apply_filters('widget_title', $instance['title']);
+        $content_before = $instance['content_before'];
+        $url_potential_friends = $instance['url_potential_friends'];
+
+        echo $before_widget;
+
+        // Display the widget title 
+        if ($title)
+            echo $before_title . $title . $after_title;
+
+        // Display content below main output
+        if ($content_before)
+            echo $content_before;
+
+
+        // Main content
+
+        $current_user = wp_get_current_user();
+
+        // get friends
+        $friends = friends_get_friend_user_ids($current_user->ID);
+
+        // get friends of friends
+        global $wpdb;
+        global $bp;
+        $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
+        $query = '
+        SELECT u.ID, u.user_login, count(nested.id) as commonContacts
+        FROM (
+            SELECT friend_user_id as id
+            FROM ' . $bp->friends->table_name . ' 
+            WHERE initiator_user_id IN (' . implode(', ', $friends) . ')
+            AND friend_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+            AND  is_confirmed = 1
+
+            UNION ALL
+
+            SELECT initiator_user_id as id
+            FROM ' . $bp->friends->table_name . '
+            WHERE friend_user_id IN (' . implode(', ', $friends) . ')
+            AND initiator_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+            AND  is_confirmed = 1
+            ) AS nested
+
+        INNER JOIN ' . $wpdb->users . ' as u
+        ON u.ID = nested.id
+        GROUP BY nested.id
+        HAVING commonContacts > 2 
+        ';
+
+        // Random friends of your friends
+        $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY RAND() LIMIT 1"));
+        if (!$result) {
+            // No user was found.. We will now take a random user
+
+            $query = '
+            SELECT u.ID, u.user_login, 0 as commonContacts
+            FROM ' . $wpdb->users . ' as u
+            ORDER BY RAND()
+            LIMIT 1
+            ';
+            $result = $wpdb->get_results($wpdb->prepare($query));
+        }
+        // friends or random user found, take them!
+        foreach ($result as $obj) {
+            // get avatar
+            $i++;
+            $actualUser = new BP_Core_User($obj->ID);
+            $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div></div>';
+        }
+        $output.='<br style="clear:both">';
+
+        echo $output;
+
+        // Display content below main output
+        if ($url_potential_friends)
+            echo '<a href="' . $url_potential_friends . '">' . __('Show more users I might know!', 'buddypressfoaf') . '</a>';
+
+        echo $after_widget;
+    }
+
+    //Update the widget 
+
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+
+        //Strip tags from title and name to remove HTML 
+        $instance['title'] = strip_tags($new_instance['title']);
+
+        // content may contain html
+        $instance['content_before'] = strip_tags($new_instance['content_before']);
+        $instance['url_potential_friends'] = strip_tags($new_instance['url_potential_friends']);
+
+        return $instance;
+    }
+
+    function form($instance) {
+
+        //Set up some default widget settings.
+        $defaults = array('title' => __('Do you know this user?', 'buddypressfoaf'), 'url_potential_friends' => '', 'content_before' => '');
+        $instance = wp_parse_args((array) $instance, $defaults);
+        ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title', 'buddypressfoaf'); ?>:</label>
+            <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+        </p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id('content_before'); ?>"><?php __('Optional content to be shown before output', 'buddypressfoaf'); ?>:</label>
+            <input id="<?php echo $this->get_field_id('content_before'); ?>" name="<?php echo $this->get_field_name('content_before'); ?>" value="<?php echo $instance['content_before']; ?>" style="width:100%;" />
+        </p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id('url_potential_friends'); ?>"><?php __('URL (optional) for page that shows more potential friends (use the shortcode at this page)', 'buddypressfoaf'); ?>:</label>
+            <input id="<?php echo $this->get_field_id('url_potential_friends'); ?>" name="<?php echo $this->get_field_name('url_potential_friends'); ?>" value="<?php echo $instance['url_potential_friends']; ?>" style="width:100%;" />
+        </p>
+        <?php
+    }
+
+}
+?>

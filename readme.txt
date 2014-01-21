@@ -18,6 +18,11 @@ If you have buddypress friends enabled your users will have friends. Their frien
 So there are "social paths" inside your friend lists. This Plugin visualizes the nearest path to the user whose profile is visited by another user.
 The world is small and you'll see that most users know each other - because their friends are friends...
 
+Features:
+* Block inside buddypress profile page (automatically integrated) that tells you whose friend the visited user is
+* Shortcode: Create a page using the shortcode [buddypressfoaf_show_potential_friends] that shows excerps of friends of your friends that are not yet your friends
+* Widget: Show a random user (friend's friend or random user if you do not have friends)
+
 Just install, activate, it will automatically plug in into buddypress profile page
 
 == Installation ==
@@ -38,8 +43,10 @@ Use the support forum
 
 == Changelog ==
 
+
 = 1.1 =
 * Introduce own page (via shortcode [buddypressfoaf_show_potential_friends] that displays the top ten of your friends' friends that have the most friends common with you. Also random friends of your friends are shown.
+* Introduce a new Widget. A random user of your friends friends is shown. If you do not have friends or friends of your friends or if you are not registered at the site a random user is shown
 
 = 1.0 = 
 * First version.
