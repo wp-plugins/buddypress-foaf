@@ -19,6 +19,7 @@ So there are "social paths" inside your friend lists. This Plugin visualizes the
 The world is small and you'll see that most users know each other - because their friends are friends...
 
 Features:
+
 * Block inside buddypress profile page (automatically integrated) that tells you whose friend the visited user is
 * Shortcode: Create a page using the shortcode [buddypressfoaf_show_potential_friends] that shows excerps of friends of your friends that are not yet your friends
 * Widget: Show a random user (friend's friend or random user if you do not have friends)
