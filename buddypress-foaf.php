@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile
- * Version: 1.0
+ * Version: 1.1
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
