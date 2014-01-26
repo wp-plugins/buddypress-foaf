@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile
- * Version: 1.1
+ * Version: 1.2
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -11,7 +11,7 @@
  * Domain Path: /languages/
  */
 // recreate pot file? excute this in the plugin's directory  
-// xgettext --language=PHP --from-code=utf-8 --keyword=__ *.php -o languages/buddypressfoaf.pot
+// xgettext --language=PHP --from-code=utf-8 --keyword=__ --keyword=_e *.php -o languages/buddypressfoaf.pot
 // Load translations and text domain
 add_action('init', 'buddypressfoaf_load_textdomain');
 
@@ -337,17 +337,17 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
         $instance = wp_parse_args((array) $instance, $defaults);
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>"><?php __('Title', 'buddypressfoaf'); ?>:</label>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title', 'buddypressfoaf'); ?>:</label>
             <input id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id('content_before'); ?>"><?php __('Optional content to be shown before output', 'buddypressfoaf'); ?>:</label>
+            <label for="<?php echo $this->get_field_id('content_before'); ?>"><?php _e('Optional content to be shown before output', 'buddypressfoaf'); ?>:</label>
             <input id="<?php echo $this->get_field_id('content_before'); ?>" name="<?php echo $this->get_field_name('content_before'); ?>" value="<?php echo $instance['content_before']; ?>" style="width:100%;" />
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id('url_potential_friends'); ?>"><?php __('URL (optional) for page that shows more potential friends (use the shortcode at this page)', 'buddypressfoaf'); ?>:</label>
+            <label for="<?php echo $this->get_field_id('url_potential_friends'); ?>"><?php $txt = _e('URL (optional) for page that shows more potential friends (use the shortcode at this page)', 'buddypressfoaf'); ?>:</label>
             <input id="<?php echo $this->get_field_id('url_potential_friends'); ?>" name="<?php echo $this->get_field_name('url_potential_friends'); ?>" value="<?php echo $instance['url_potential_friends']; ?>" style="width:100%;" />
         </p>
         <?php

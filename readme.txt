@@ -44,6 +44,8 @@ Use the support forum
 
 == Changelog ==
 
+= 1.2 =
+* Fixed little bug for gettext language generation
 
 = 1.1 =
 * Introduce own page (via shortcode [buddypressfoaf_show_potential_friends] that displays the top ten of your friends' friends that have the most friends common with you. Also random friends of your friends are shown.
