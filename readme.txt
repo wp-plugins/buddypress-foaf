@@ -44,6 +44,9 @@ Use the support forum
 
 == Changelog ==
 
+= 1.3 =
+* Widget now only shows users that have been active in the last 6 months
+
 = 1.2 =
 * Fixed little bug for gettext language generation
 
