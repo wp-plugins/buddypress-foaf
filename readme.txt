@@ -44,6 +44,9 @@ Use the support forum
 
 == Changelog ==
 
+= 1.4 =
+* Fixed little bug in profile output
+
 = 1.3 =
 * Widget now only shows users that have been active in the last 6 months
 
