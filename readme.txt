@@ -44,7 +44,7 @@ Use the support forum
 
 == Screenshots ==
 
-+1. screenshot-1.jpg
+1. screenshot-1.jpg
 
 == Changelog ==
 
