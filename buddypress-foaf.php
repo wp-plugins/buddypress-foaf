@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 1.4
+ * Version: 1.5
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -75,7 +75,7 @@ function buddypressfoaf_action() {
                         // Now we need to know if the FOUND initiator_user_id is friend of friendA or not
                         // if not we have to reverse the values
                         global $wpdb;
-                        if (!$result = $wpdb->get_results($wpdb->prepare($query))) {
+                        if (!$result = $wpdb->get_results($query)) {
                             $noConnectionFound = true;
                         } else {
                             // A <=> U1 <=> U2 <=> B?
@@ -177,7 +177,7 @@ function buddypressfoaf_show_potential_friends() {
         ';
 
     // Random friends of your friends
-    $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY RAND() LIMIT 10"));
+    $result = $wpdb->get_results($query . " ORDER BY RAND() LIMIT 10");
     $output.="<h3>" . __('Random friends of your friends you might know', 'buddypressfoaf') . "</h3>";
     if ($result) {
         foreach ($result as $obj) {
@@ -195,7 +195,7 @@ function buddypressfoaf_show_potential_friends() {
     $output.='<p><a href="' . get_permalink() . '?' . time() . '">' . __('You want to see more? Reload this page!', 'buddypressfoaf') . '</a></p>';
 
     // now we will show the top ten
-    $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY commonContacts DESC LIMIT 10"));
+    $result = $wpdb->get_results($query . " ORDER BY commonContacts DESC LIMIT 10");
     $output.="<h3>" . __('You have most common friends with these users', 'buddypressfoaf') . "</h3>";
     if ($result) {
         foreach ($result as $obj) {
@@ -289,7 +289,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
         ';
 
         // Random user that have been active in the last 6 months
-        $result = $wpdb->get_results($wpdb->prepare($query . " ORDER BY RAND() LIMIT 1"));
+        $result = $wpdb->get_results($query . " ORDER BY RAND() LIMIT 1");
         if (!$result) {
             // No user was found.. We will now take a random user
 
@@ -303,7 +303,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             ORDER BY RAND()
             LIMIT 1
             ';
-            $result = $wpdb->get_results($wpdb->prepare($query));
+            $result = $wpdb->get_results($query);
         }
         // friends or random user found, take them!
         foreach ($result as $obj) {
