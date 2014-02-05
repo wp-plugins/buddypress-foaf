@@ -44,9 +44,8 @@ Use the support forum
 
 == Screenshots ==
 
-See the "friend path" to the visited profile
-
 1. screenshot-1.jpg
+1. screenshot-2.jpg
 
 == Changelog ==
 
