@@ -46,6 +46,7 @@ Use the support forum
 
 1. screenshot-1.jpg
 1. screenshot-2.jpg
+1. screenshot-3.jpg
 
 == Changelog ==
 
