@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 1.5
+ * Version: 1.6
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -97,7 +97,7 @@ function buddypressfoaf_action() {
             } else {
                 $noConnectionFound = true;
             }
-        } 
+        }
         if ($noConnectionFound) {
             $output.=__('No connection found', 'buddypressfoaf');
         }
@@ -249,7 +249,6 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
 
 
         // Main content
-
         $current_user = wp_get_current_user();
 
         // get friends
@@ -258,40 +257,43 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
         // get friends of friends
         global $wpdb;
         global $bp;
-        $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
-        // build SQL query with friends of friends that have been active in the last 6 months of the current user
-        $query = '
-        SELECT u.ID, u.user_login, count(nested.id) as commonContacts, m.meta_value as last_activity
-        FROM (
-            SELECT friend_user_id as id
-            FROM ' . $bp->friends->table_name . ' 
-            WHERE initiator_user_id IN (' . implode(', ', $friends) . ')
-            AND friend_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
-            AND  is_confirmed = 1
 
-            UNION ALL
+        if (count($friends) > 0) {
+            $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
+            // build SQL query with friends of friends that have been active in the last 6 months of the current user
+            $query = '
+                SELECT u.ID, u.user_login, count(nested.id) as commonContacts, m.meta_value as last_activity
+                FROM (
+                    SELECT friend_user_id as id
+                    FROM ' . $bp->friends->table_name . ' 
+                    WHERE initiator_user_id IN (' . implode(', ', $friends) . ')
+                    AND friend_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+                    AND  is_confirmed = 1
 
-            SELECT initiator_user_id as id
-            FROM ' . $bp->friends->table_name . '
-            WHERE friend_user_id IN (' . implode(', ', $friends) . ')
-            AND initiator_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
-            AND  is_confirmed = 1
-            ) AS nested
+                    UNION ALL
 
-        INNER JOIN ' . $wpdb->users . ' as u
-        ON u.ID = nested.id
-        INNER JOIN ' . $wpdb->usermeta . ' as m
-        ON m.user_id = u.ID
-        WHERE m.meta_key = "last_activity"
-        AND m.meta_value > "' . date("Y-m-d 00:00:00", (time() - 60 * 60 * 24 * 30 * 6)) . '"
-        GROUP BY nested.id
-        HAVING commonContacts > 2 
-        ';
+                    SELECT initiator_user_id as id
+                    FROM ' . $bp->friends->table_name . '
+                    WHERE friend_user_id IN (' . implode(', ', $friends) . ')
+                    AND initiator_user_id NOT IN (' . $sqlPartExcludeMeAndMyFriends . ')
+                    AND  is_confirmed = 1
+                    ) AS nested
 
-        // Random user that have been active in the last 6 months
-        $result = $wpdb->get_results($query . " ORDER BY RAND() LIMIT 1");
+                INNER JOIN ' . $wpdb->users . ' as u
+                ON u.ID = nested.id
+                INNER JOIN ' . $wpdb->usermeta . ' as m
+                ON m.user_id = u.ID
+                WHERE m.meta_key = "last_activity"
+                AND m.meta_value > "' . date("Y-m-d 00:00:00", (time() - 60 * 60 * 24 * 30 * 6)) . '"
+                GROUP BY nested.id
+                HAVING commonContacts > 2 
+                ';
+
+            // Random friend of friend that have been active in the last 6 months
+            $result = $wpdb->get_results($query . " ORDER BY RAND() LIMIT 1");
+        }
         if (!$result) {
-            // No user was found.. We will now take a random user
+            // No user was found or user does not have friends. We will now take a random user to proceed
 
             $query = '
             SELECT u.ID, u.user_login, 0 as commonContacts

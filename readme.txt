@@ -50,8 +50,11 @@ Use the support forum
 
 == Changelog ==
 
+= 1.6 =
+* Code cleanup, fixed minor bugs
+
 = 1.5 =
-* Little code cleanup (no more php warnings)
+* Code cleanup, fixed minor bugs
 
 = 1.4 =
 * Fixed little bug in profile output
