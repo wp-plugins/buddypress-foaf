@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 1.6
+ * Version: 1.7
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -125,7 +125,10 @@ function buddypressfoaf_output($args) {
         $i++;
         $actualUser = new BP_Core_User($id);
         // get avatar
-        $content.= $actualUser->avatar_thumb;
+        //$content.= $actualUser->avatar_thumb;
+        $userdata = get_userdata($id);
+        $data = $userdata->data;
+        $content.= '<a href="' . bp_core_get_userlink($data->ID, false, true) . '">' . bp_core_fetch_avatar(array('object' => 'user', 'item_id' => $data->ID));
 
         if ($i != count($connection)) {
             $content.= ' <span style="float:left;padding-top: 20px;margin-left:-15px;font-size: 22px;"/>&harr;</span>';

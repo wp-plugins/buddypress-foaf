@@ -50,6 +50,9 @@ Use the support forum
 
 == Changelog ==
 
+= 1.7 =
+* Avatars that are shown in profile pages of visited user profiles are now clickable
+
 = 1.6 =
 * Code cleanup, fixed minor bugs
 
