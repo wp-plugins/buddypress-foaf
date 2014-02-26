@@ -21,7 +21,7 @@ The world is small and you'll see that most users know each other - because thei
 
 **Features:**
 
-Please take a look at the [Screenshot] (https://wordpress.org/plugins/buddypress-foaf/screenshots/) section for some examples!
+Please take a look at the [screenshot section](https://wordpress.org/plugins/buddypress-foaf/screenshots/ "Screenshots") for some examples!
 
 * New block inside buddypress profile page (automatically integrated) that tells you whose friend the visited user is
 * Shortcode: Create a page using the shortcode [buddypressfoaf_show_potential_friends] that shows excerps of friends of your friends that are not yet your friends
