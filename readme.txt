@@ -12,7 +12,7 @@ This plugin includes a new block inside each user profile page and includes a "F
 
 == Description ==
 
-Increase communication and networking at your buddypress based social network.
+**Increase communication and networking at your buddypress based social network.**
 
 This plugin includes a new block inside each user profile page and includes a "Friend of a Friend (FOAF)" display.
 If you have buddypress friends enabled your users will have friends. Their friends also have friends and these friends again have friends.
@@ -21,7 +21,7 @@ The world is small and you'll see that most users know each other - because thei
 
 **Features:**
 
-Please take a look at the Screenshot section for some examples!
+Please take a look at the [Screenshot] (https://wordpress.org/plugins/buddypress-foaf/screenshots/) section for some examples!
 
 * New block inside buddypress profile page (automatically integrated) that tells you whose friend the visited user is
 * Shortcode: Create a page using the shortcode [buddypressfoaf_show_potential_friends] that shows excerps of friends of your friends that are not yet your friends
