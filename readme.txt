@@ -44,9 +44,9 @@ Use the support forum
 
 == Screenshots ==
 
-1. screenshot-1.jpg
-1. screenshot-2.jpg
-1. screenshot-3.jpg
+1. Buddypress profile integration: if you visit another profile you will see via which friends you now the visited person
+1. A widget will introduce other members to you you might know about your friends
+1. Via shortcode you can integrate a "do you know this friends of your friends" page into any place at your wordpress site!
 
 == Changelog ==
 
