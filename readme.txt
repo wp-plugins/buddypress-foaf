@@ -21,13 +21,11 @@ The world is small and you'll see that most users know each other - because thei
 
 **Features:**
 
-Please take a look at the [screenshot section](https://wordpress.org/plugins/buddypress-foaf/screenshots/ "Screenshots") for some examples!
-
 * New block inside buddypress profile page (automatically integrated) that tells you whose friend the visited user is
 * Shortcode: Create a page using the shortcode [buddypressfoaf_show_potential_friends] that shows excerps of friends of your friends that are not yet your friends
 * Widget: Show a random user (friend's friend or random user if you do not have friends)
 
-Just install, activate, it will automatically plug in into buddypress profile page
+Please take a look at the [screenshot section](https://wordpress.org/plugins/buddypress-foaf/screenshots/ "Screenshots") for some examples!
 
 == Installation ==
 
