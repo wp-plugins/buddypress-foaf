@@ -58,6 +58,9 @@ Use the support forum
 
 == Changelog ==
 
+= 1.8 =
+* Avatars shown at profile pages are now always shown as thumbnails.
+
 = 1.7 =
 * Avatars that are shown in profile pages of visited user profiles are now clickable
 
