@@ -58,6 +58,9 @@ Use the support forum
 
 == Changelog ==
 
+= 1.9 =
+* Fixed minor bug: using user_nicename instead of user_login now.
+
 = 1.8 =
 * Avatars shown at profile pages are now always shown as thumbnails.
 

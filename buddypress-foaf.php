@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 1.8
+ * Version: 1.9
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -156,7 +156,7 @@ function buddypressfoaf_show_potential_friends() {
     global $bp;
     $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
     $query = '
-        SELECT u.ID, u.user_login, count(nested.id) as commonContacts
+        SELECT u.ID, u.user_nicename, count(nested.id) as commonContacts
         FROM (
             SELECT friend_user_id as id
             FROM ' . $bp->friends->table_name . ' 
@@ -187,7 +187,7 @@ function buddypressfoaf_show_potential_friends() {
             // get avatar
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
                 ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
         }
         //print "<pre>" . var_dump($usersWithCommonFriends);
@@ -204,7 +204,7 @@ function buddypressfoaf_show_potential_friends() {
         foreach ($result as $obj) {
             // get avatar
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
                 ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
         }
     } else {
@@ -265,7 +265,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
             // build SQL query with friends of friends that have been active in the last 6 months of the current user
             $query = '
-                SELECT u.ID, u.user_login, count(nested.id) as commonContacts, m.meta_value as last_activity
+                SELECT u.ID, u.user_nicename, count(nested.id) as commonContacts, m.meta_value as last_activity
                 FROM (
                     SELECT friend_user_id as id
                     FROM ' . $bp->friends->table_name . ' 
@@ -299,7 +299,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             // No user was found or user does not have friends. We will now take a random user to proceed
 
             $query = '
-            SELECT u.ID, u.user_login, 0 as commonContacts
+            SELECT u.ID, u.user_nicename, 0 as commonContacts
             FROM ' . $wpdb->users . ' as u
             INNER JOIN ' . $wpdb->usermeta . ' as m
             ON m.user_id = u.ID
@@ -315,7 +315,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             // get avatar
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/><small>' . $actualUser->profile_data['user_login'] . '</small></a><br />
+            $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
                 ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div></div>';
         }
         $output.='<br style="clear:both">';
