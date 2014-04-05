@@ -58,6 +58,9 @@ Use the support forum
 
 == Changelog ==
 
+= 2.0 =
+* Using bp_core_get_userlink() method from Buddypress now to create userlinks in widget and shortcode output
+
 = 1.9 =
 * Fixed minor bug: using user_nicename instead of user_login now.
 

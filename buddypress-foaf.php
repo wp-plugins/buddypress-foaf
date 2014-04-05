@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 1.9
+ * Version: 2.0
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -187,7 +187,7 @@ function buddypressfoaf_show_potential_friends() {
             // get avatar
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '</a><br/>' . bp_core_get_userlink($obj->ID) . '<br />
                 ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
         }
         //print "<pre>" . var_dump($usersWithCommonFriends);
@@ -204,7 +204,7 @@ function buddypressfoaf_show_potential_friends() {
         foreach ($result as $obj) {
             // get avatar
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br /><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
+            $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '</a><br/>' . bp_core_get_userlink($obj->ID) . '<br />
                 ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
         }
     } else {
@@ -315,8 +315,8 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             // get avatar
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
-            $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/><small>' . $actualUser->profile_data['user_nicename'] . '</small></a><br />
-                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div></div>';
+            $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/></a>
+                ' . bp_core_get_userlink($obj->ID) . '<br/>'. $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div></div>';
         }
         $output.='<br style="clear:both">';
 
