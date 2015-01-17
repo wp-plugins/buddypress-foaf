@@ -58,6 +58,9 @@ Use the support forum
 
 == Changelog ==
 
+= 2.1 =
+* Some code corrections (debug messages, thanks to BackpackersUnion for reporting)
+
 = 2.0 =
 * Using bp_core_get_userlink() method from Buddypress now to create userlinks in widget and shortcode output
 
