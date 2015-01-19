@@ -3,7 +3,7 @@ Contributors: Florian Schießl
 Donate link: http://ifs-net.de/donate.php
 Tags: buddypress, foaf, social, buddy, friends
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.1
 Stable Tag: trunk
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -57,6 +57,9 @@ Use the support forum
 1. Via shortcode you can integrate a "do you know this friends of your friends" page into any place at your wordpress site!
 
 == Changelog ==
+
+= 2.2 =
+* little bug fixed: Own user could be shown as potential friend if a user does not have friends yet
 
 = 2.1 =
 * Some code corrections (debug messages, thanks to BackpackersUnion for reporting)

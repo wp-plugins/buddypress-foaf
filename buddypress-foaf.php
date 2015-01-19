@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 2.1
+ * Version: 2.2
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -308,6 +308,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             ON m.user_id = u.ID
             WHERE m.meta_key = "last_activity"
             AND m.meta_value > "' . date("Y-m-d 00:00:00", (time() - 60 * 60 * 24 * 30 * 6)) . '"
+            AND u.ID != '.$current_user->ID.'
             ORDER BY RAND()
             LIMIT 1
             ';
