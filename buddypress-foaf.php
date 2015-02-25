@@ -33,7 +33,7 @@ add_shortcode('buddypressfoaf_show_potential_friends', 'buddypressfoaf_show_pote
 function buddypressfoaf_action() {
     $current_user = wp_get_current_user();
     $noConnectionFound = false;
-    $output="";
+    $output = "";
     // Do nothing if the own profile is viewed or viewing user is not logged in
     if (is_user_logged_in() && ($current_user->ID != bp_displayed_user_id())) {
         // User A visits User B
@@ -121,9 +121,9 @@ function buddypressfoaf_output($args) {
     $connection = $args[$randomNumber];
     // show single connection
     $i = 0;
-    $ii=0;
+    $ii = 0;
     $ii++;
-    $content="";
+    $content = "";
     foreach ($connection as $id) {
         $i++;
         $actualUser = new BP_Core_User($id);
@@ -191,7 +191,7 @@ function buddypressfoaf_show_potential_friends() {
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
             $output.= '<div style="float:left; text-align: center; margin-bottom: 10px;"><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '</a><br/>' . bp_core_get_userlink($obj->ID) . '<br />
-                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div>';
+                ' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '<br />' . bp_get_add_friend_button($actualUser->id) . '</div>';
         }
         //print "<pre>" . var_dump($usersWithCommonFriends);
     } else {
@@ -308,7 +308,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             ON m.user_id = u.ID
             WHERE m.meta_key = "last_activity"
             AND m.meta_value > "' . date("Y-m-d 00:00:00", (time() - 60 * 60 * 24 * 30 * 6)) . '"
-            AND u.ID != '.$current_user->ID.'
+            AND u.ID != ' . $current_user->ID . '
             ORDER BY RAND()
             LIMIT 1
             ';
@@ -320,7 +320,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             $i++;
             $actualUser = new BP_Core_User($obj->ID);
             $output.= '<div style="width: 150px;margin-left: auto; margin-right: auto; text-align:center;"><div><a href="' . $actualUser->user_url . '">' . $actualUser->avatar . '<br style="clear:both;"/></a>
-                ' . bp_core_get_userlink($obj->ID) . '<br/>'. $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '</div></div>';
+                ' . bp_core_get_userlink($obj->ID) . '<br/>' . $obj->commonContacts . ' ' . __('common contacts', 'buddypressfoaf') . '<br />' . bp_get_add_friend_button($actualUser->id) . '</div></div>';
         }
         $output.='<br style="clear:both">';
 
