@@ -58,6 +58,9 @@ Use the support forum
 
 == Changelog ==
 
+= 2.3 =
+* adding "add as friend" button below the users suggested as friends (thanks to maddogmcewan)
+
 = 2.2 =
 * little bug fixed: Own user could be shown as potential friend if a user does not have friends yet
 
