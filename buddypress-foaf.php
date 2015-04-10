@@ -3,7 +3,7 @@
  * Plugin Name: Buddypress Friend of a Friend (FOAF)
  * Plugin URI: http://ifs-net.de
  * Description: Includes information into other user profiles that tells you the "social path" to the visited profile. It also includes a widget showing random friends of a user's friends to increase networking at your website
- * Version: 2.3
+ * Version: 2.4
  * Author: Florian Schiessl
  * Author URI: http://ifs-net.de
  * License: GPL2
@@ -157,7 +157,7 @@ function buddypressfoaf_show_potential_friends() {
     // get friends of friends
     global $wpdb;
     global $bp;
-    $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
+    $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID,1), $friends));
     $query = '
         SELECT u.ID, u.user_nicename, count(nested.id) as commonContacts
         FROM (
@@ -265,7 +265,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
         global $bp;
 
         if (count($friends) > 0) {
-            $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID), $friends));
+            $sqlPartExcludeMeAndMyFriends = implode(',', array_merge(array($current_user->ID,1), $friends));
             // build SQL query with friends of friends that have been active in the last 6 months of the current user
             $query = '
                 SELECT u.ID, u.user_nicename, count(nested.id) as commonContacts, m.meta_value as last_activity

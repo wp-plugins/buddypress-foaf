@@ -3,7 +3,7 @@ Contributors: Florian Schießl
 Donate link: http://ifs-net.de/donate.php
 Tags: buddypress, foaf, social, buddy, friends
 Requires at least: 3.0
-Tested up to: 4.1
+Tested up to: 4.1.1
 Stable Tag: trunk
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -46,6 +46,10 @@ Available Shortcodes:
 
 == Frequently Asked Questions ==
 
+= The admin user is not shown up in "you may know" widget or site =
+
+Yes, the user with ID 1 (admin) is excluded
+
 = You have a question? =
 
 Use the support forum
@@ -57,6 +61,9 @@ Use the support forum
 1. Via shortcode you can integrate a "do you know this friends of your friends" page into any place at your wordpress site!
 
 == Changelog ==
+
+= 2.4 =
+* Admin user (user with ID 1) will not appear any more in "you might know" widget or site
 
 = 2.3 =
 * adding "add as friend" button below the users suggested as friends (thanks to maddogmcewan)
