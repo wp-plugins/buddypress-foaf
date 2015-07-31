@@ -62,6 +62,9 @@ Use the support forum
 
 == Changelog ==
 
+= 2.5 =
+* Fixing two minor bugs
+
 = 2.4 =
 * Admin user (user with ID 1) will not appear any more in "you might know" widget or site
 
