@@ -315,6 +315,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             $result = $wpdb->get_results($query);
         }
         // friends or random user found, take them!
+        $i = 0;
         foreach ($result as $obj) {
             // get avatar
             $i++;
