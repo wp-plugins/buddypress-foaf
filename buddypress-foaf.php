@@ -299,7 +299,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             $result = $wpdb->get_results($query . " ORDER BY RAND() LIMIT 1");
         }
         if (!$result) {
-            // No user was found or user does not have friends. We will now take a random user to proceed
+            // No user was found or user does not have friends. We will now take a random user (except admin with ID 1) to proceed
 
             $query = '
             SELECT u.ID, u.user_nicename, 0 as commonContacts
@@ -308,7 +308,7 @@ class BuddypressFOAF_Widget_Random extends WP_Widget {
             ON m.user_id = u.ID
             WHERE m.meta_key = "last_activity"
             AND m.meta_value > "' . date("Y-m-d 00:00:00", (time() - 60 * 60 * 24 * 30 * 6)) . '"
-            AND u.ID != ' . $current_user->ID . '
+            AND u.ID NOT IN (' . $current_user->ID . ', 1)
             ORDER BY RAND()
             LIMIT 1
             ';
